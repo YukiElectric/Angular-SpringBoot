@@ -3,15 +3,17 @@ package com.project.shopapp.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "orders")
 @Getter
 @Setter
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @Builder
 public class Order {
     @Id
@@ -38,7 +40,10 @@ public class Order {
     private String note;
     
     @Column(name = "order_date")
-    private LocalDateTime orderDate;
+    private LocalDate orderDate;
+    
+    @Column(name = "shipping_date")
+    private LocalDate shippingDate;
     
     private String status;
     

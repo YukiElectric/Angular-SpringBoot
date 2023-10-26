@@ -1,6 +1,8 @@
 package com.project.shopapp.controllers;
 
 import com.project.shopapp.dtos.UserDTO;
+import com.project.shopapp.dtos.UserLoginDTO;
+import com.project.shopapp.models.User;
 import com.project.shopapp.services.impl.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,25 +28,29 @@ public class UserController {
     ) {
         try {
             if(result.hasErrors()){
-                List<String> erorMessages = result.getFieldErrors()
+                List<String> errorMessages = result.getFieldErrors()
                     .stream()
                     .map(FieldError::getDefaultMessage)
                     .toList();
-                return ResponseEntity.badRequest().body(erorMessages);
+                return ResponseEntity.badRequest().body(errorMessages);
             }
             if(!userDTO.getPassword().equals(userDTO.getRetypePassword())){
                 return ResponseEntity.badRequest().body("Password does not match");
             }
-            userService.createUser(userDTO);
-            return ResponseEntity.ok("Register successfully");
+            User user = userService.createUser(userDTO);
+            return ResponseEntity.ok(user);
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
     
     @PostMapping("/login")
-    public ResponseEntity<String> login(@Valid @RequestBody UserDTO userDTO) {
-//        String token = userService.login(userDTO.getPhoneNumber(), userDTO.getPassword());
-        return ResponseEntity.ok("Some token");
+    public ResponseEntity<String> login(@Valid @RequestBody UserLoginDTO userLoginDTO) {
+        try {
+            String token = userService.login(userLoginDTO.getPhoneNumber(), userLoginDTO.getPassword());
+            return ResponseEntity.ok(token);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

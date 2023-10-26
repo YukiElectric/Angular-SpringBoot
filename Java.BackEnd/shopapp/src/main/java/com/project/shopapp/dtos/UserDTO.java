@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
-    @JsonProperty("full_name")
+    @JsonProperty("fullname")
     private String fullName;
     
     @NotBlank(message = "Phone number is required")
@@ -26,7 +26,7 @@ public class UserDTO {
     @NotNull(message = "Password cannot be blank")
     private String password;
     
-    @JsonProperty(namespace = "retype_password")
+    @JsonProperty("retype_password")
     private String retypePassword;
     
     @JsonProperty("date_of_birth")

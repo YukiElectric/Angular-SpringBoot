@@ -11,7 +11,7 @@ CREATE TABLE users (
     is_active TINYINT(1) DEFAULT 1,
     date_of_birth DATE,
     facebook_account_id INT DEFAULT 0,
-    google_acccount_id INT DEFAULT 0
+    google_account_id INT DEFAULT 0
 );
 ALTER TABLE users ADD COLUMN role_id INT;
 CREATE TABLE roles (
@@ -83,7 +83,7 @@ ALTER TABLE orders ADD COLUMN active TINYINT(1);
 ALTER TABLE orders
 MODIFY COLUMN status ENUM('pending', 'processing', 'shipped', 'deliverd', 'cancelled')
 COMMENT 'Trạng thái đơn hàng';
-CREATE TABLE oder_details (
+CREATE TABLE order_details (
     id INT PRIMARY KEY AUTO_INCREMENT,
     order_id INT,
     FOREIGN KEY (order_id) REFERENCES orders (id),
@@ -94,3 +94,7 @@ CREATE TABLE oder_details (
     total_money FLOAT CHECK (total_money >= 0),
     color VARCHAR(20) DEFAULT ''
 );
+INSERT INTO roles(id,name)
+VALUES(1,"user");
+INSERT INTO roles(id, name)
+VALUES(2,"admin");
